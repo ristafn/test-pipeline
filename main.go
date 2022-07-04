@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -11,5 +12,10 @@ func main() {
 		json.NewEncoder(w).Encode("hello from test")
 	})
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Fatal(http.ListenAndServe(":" + port, nil))
 }
